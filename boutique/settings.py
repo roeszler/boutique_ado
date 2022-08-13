@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # With SITE_ID = 1, used by the social account app to create the
+    # proper callback URLs when connecting via social media accounts:
+    'django.contrib.sites',
+    'allauth',
+    # he allauth account app that allows all the basic user account stuff like
+    # logging in and out, user registration and password resets:
+    'allauth.account',
+    # Specifically handles logging in via social media providers like Facebook
+    # and Google:
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -59,13 +70,29 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                #allows allauth and django itself to access the HTTP 'request' object in our templates:
+                'django.template.context_processors.request', # required by allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    # Handles superusers logging into the admin which allauth doesn't handle,
+    # so defers to the default django Code to handle it.
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    # Allowing users to log into our store via their email address
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# With 'django.contrib.sites', used by the social account app to create the
+# proper callback URLs when connecting via social media accounts:
+SITE_ID = 1
 
 WSGI_APPLICATION = 'boutique.wsgi.application'
 

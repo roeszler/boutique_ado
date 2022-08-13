@@ -1,4 +1,4 @@
-# Boutique ADO online clothing and accessories store
+# Boutique ADO online Clothing and Accessories Store
 A [CI](https://codeinstitute.net/) walkthrough project 2022
 
 * Deployment: 
@@ -48,7 +48,7 @@ Database Tables?
 
 The type of e-commerce application required for a Boutique ADO online clothing and accessories store would be: a B2C Product Site with a single payment system.
 # User Stories - Overview
-![ECommerce User Stories](https://docs.google.com/spreadsheets/d/1xpaWj7DZcxE8CqUgFXvs9nctZHzEO9mHce_L539j0fE/edit?usp=sharing)
+[ECommerce User Stories](https://docs.google.com/spreadsheets/d/1xpaWj7DZcxE8CqUgFXvs9nctZHzEO9mHce_L539j0fE/edit?usp=sharing)
 
 1) Authentication: User can signup/login/logout
 
