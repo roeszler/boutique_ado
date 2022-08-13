@@ -1,108 +1,178 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Boutique ADO online clothing and accessories store
+A [CI](https://codeinstitute.net/) walkthrough project 2022
 
-Welcome USER_NAME,
+* Deployment: 
+* Repository: https://github.com/roeszler/boutique_ado
+## 3 step planning process:
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+Type of e-commerce application for Boutique Ado Walkthrough?
+* B2C 
+* Selling Products 
+* Single payment system
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+Features?
+* Easy payment gateway
+* Authentication system (log in, log out and access their relevant data)
+* Be able to search and filter their results to find what they're looking for
+* High quality images
+* Clear descriptions for each product
+* Ratings or reviews. 
+* Shopping cart and payment system
+* Notify of delivery
+* Manage support tickets
 
-## Gitpod Reminders
+Database Tables?
+* USER
+	- username
+	- email
+	- password (for authentication)
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+* PRODUCT
+	- product name
+	- images, 
+	- price, 
+	- description,
+	- rating, 
+	- category (aid filtering functionality)
 
-`python3 -m http.server`
+* ORDER_ITEM
+	- ORDER
+	- PRODUCT(S)
+	- quantity
 
-A blue button should appear to click: _Make Public_,
+* ORDER
+	- USER
+	- total
+	- full_name
+	- address
 
-Another blue button should appear to click: _Open Browser_.
+The type of e-commerce application required for a Boutique ADO online clothing and accessories store would be: a B2C Product Site with a single payment system.
+# User Stories - Overview
+![ECommerce User Stories](https://docs.google.com/spreadsheets/d/1xpaWj7DZcxE8CqUgFXvs9nctZHzEO9mHce_L539j0fE/edit?usp=sharing)
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+1) Authentication: User can signup/login/logout
 
-A blue button should appear to click: _Make Public_,
+2) Items for sale: User can view lists of items for sale and search by name, filter by price.
 
-Another blue button should appear to click: _Open Browser_.
+3) Shopping Cart: User can add items to shopping cart and the app remembers it next time you login. User can view all the items in their shopping cart.  User can delete items in the shopping cart.  Shopping cart uses an integer column to store "state".
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+4) Checkout: User can fill in form and submit billing info.  After submitting billing info, items in the shopping cart will move to a different "state".
 
-To log into the Heroku toolbelt CLI:
+# Authentication
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+Registration:
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+1) Create a signup page /signup 
 
-------
+2) Add a url/controller/template /signup
 
-## Release History
+3) /signup has a form, username, email, and password.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+4) "Submit" button posts to /register
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+5) /register creates a new user
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+https://docs.djangoproject.com/en/1.8/topics/auth/default/#creating-users
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+Login:
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+1) Create a login page /login
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+2) /login shows a form for username and password 
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+3) "Submit" button posts to /login_user
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+4) /login_user uses the code below
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+https://docs.djangoproject.com/en/1.8/topics/auth/default/#how-to-log-a-user-in
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+Authenticate: 
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+1) Create a new page that is only for logged in users. A members only page.  Up to you what you want to show!
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+2) If the user is logged in, show the page.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+3) If not, redirect the user to the login page
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+https://docs.djangoproject.com/en/1.8/topics/auth/default/#authentication-in-web-requests
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+Logout:
 
-------
+1) Create a new url/controller for /logout
 
-## FAQ about the uptime script
+2) When /logout is called, redirect user to the home page
 
-**Why have you added this script?**
+https://docs.djangoproject.com/en/1.8/topics/auth/default/#how-to-log-a-user-out
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
 
-**How will this affect me?**
+# Items
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+1) Create a new Item Model with the following fields:
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+Name, Description, Price
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+2) Create several in the admin or shell
 
-**So….?**
+3) Create new routes and templates to show a listing of the items
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+/items ->shows all items
 
-**Can I opt out?**
+4) Create new route and template to show just one listing
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+5) Create more then 10 items
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+# Pagination
 
-**Anything more?**
+1) Add pagination to the items listing page, show 10 items per page
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+https://docs.djangoproject.com/en/1.8/topics/pagination/
 
----
+# Search
 
-Happy coding!
+1) Add search box to items listing page, search uses GET and query params to generate new page.  The search query uses the name and description fields.
+
+# Filter
+
+1) Allow the user to filter items by price. Use GET and query params.  Filter by a range of prices (0-50, 50-100, 100+).
+
+# Json API for Items
+
+- Add a format query param handler to /items where if the format equals json,  then the response is in json
+
+https://docs.djangoproject.com/en/1.8/ref/request-response/
+
+# Shopping cart/order
+
+- Create a new Model called Order (This is the shopping cart!)
+
+An order belongs to a user, and has multiple items. A user can have many orders.  An order has a status column, which is an integer field:
+
+1 - In shopping cart
+
+2 - Purchased
+
+For any given user, you can only have one order with a status equal to 1.  
+
+When a user adds an item to the shopping cart, if there is no order with a status equal to 1, then create a new order for the user.
+
+- Create a new route and view for /cart
+
+/cart shows what items are in that users cart
+
+- To show cart, you will need to query for the right order - match the user (request.user) and set a condition where status is equal to one.
+
+- Allow user to delete items from the cart
+
+- Shows the total price of all items
+
+- Allows them to purchase items, purchasing takes the user to payment form at /payments
+
+- Update the /item/<item id> template to have a "purchase" button - when clicked, the item is added to the order, and the user is redirected to /cart
+
+# Payment form
+
+- Create a new route and template for /payments
+
+- Create a form that allows the user to enter billing info 
+
+- On submit, the order id status changes to purchased (2) 
