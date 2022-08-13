@@ -94,6 +94,25 @@ AUTHENTICATION_BACKENDS = [
 # proper callback URLs when connecting via social media accounts:
 SITE_ID = 1
 
+# Since by default allauth will send confirmation emails to any new accounts.
+# We need to temporarily log those emails to the console so we can get the confirmation links:
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# is what tells allauth that we want to allow authentication using either usernames or emails:
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+
+# These three make an email to be required to register for the site, 
+# verifying your email is mandatory and enter it twice:
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+
+# minimum username length of four characters:
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/success'
+
 WSGI_APPLICATION = 'boutique.wsgi.application'
 
 
