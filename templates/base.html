@@ -45,6 +45,19 @@
     {% if messages %}
     <div class="message-container"></div>
     {% endif %}
+
+<!-- subheader page underneath the main header -->
+    {% block page_header %}
+    {% endblock %}
+
+    <!-- Main page content  -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Js to load at end -->
+    {% block postload_js %}
+    {% endblock %}
+
 </body>
 
 </html>
