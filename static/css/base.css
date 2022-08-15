@@ -66,6 +66,13 @@ unless we manually change it.
 
 /* Slightly larger container in xl screens */
 @media (min-width: 1200px) {
+    .container {
+        max-width: 80%;
+    }
+}
+
+/* fixed top navbar only on medium and up */
+@media (min-width: 992px) {
     .fixed-top-desktop-only {
         position: fixed;
         top: 0;
@@ -74,6 +81,10 @@ unless we manually change it.
         z-index: 1030;
     }
 
+    /* 
+    Add 164 pixels of padding to our header container class to 
+    push the body down to the bottom of the main page navbar.
+    */
     .header-container {
         padding-top: 164px;
     }
