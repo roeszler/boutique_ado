@@ -3,8 +3,8 @@ html {
 }
 
 body {
-    background: url('media/homepage_background_cropped.jpeg') no-repeat center center fixed;
-    /* background-size: cover; */
+    background: url('/media/homepage_background_cropped.jpeg') no-repeat center center fixed;
+    background-size: cover;
     height: calc(100vh - 164px); /* height calculation to the body: 100vh - 164 pixels = the eventual height of our top header */
     color: #555;
     font-family: 'Lato';
