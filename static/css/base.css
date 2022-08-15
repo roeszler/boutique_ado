@@ -1,0 +1,80 @@
+html {
+    height: 100%;
+}
+
+body {
+    background: url('media/homepage_background_cropped.jpeg') no-repeat center center fixed;
+    /* background-size: cover; */
+    height: calc(100vh - 164px); /* height calculation to the body: 100vh - 164 pixels = the eventual height of our top header */
+    color: #555;
+    font-family: 'Lato';
+}
+
+/* 
+From Bulma CSS framework:
+icon class that ensures that whenever we use font awesome icons,
+they will always stay perfectly centred and have a consistent size
+unless we manually change it.
+*/
+.icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.logo-front {
+    text-transform: uppercase;
+}
+
+.main-logo-link {
+    width: fit-content;
+}
+
+.shop-now-button {
+    background: #000;
+    color: #fff;
+    min-width: 260px;
+}
+
+/* Bootstrap version used doesn't have it's own black class */
+.btn-black {
+    background: #000;
+    color: #fff;
+}
+
+.shop-now-button:hover,
+.shop-now-button:active,
+.shop-now-button:focus,
+.btn-black:hover,
+.btn-black:active,
+.btn-black:focus {
+    background: #222;
+    color: #fff;
+}
+
+.text-black {
+    color: #000 !important;
+}
+
+.border-black {
+    border: 1px solid #000 !important;
+}
+
+/* ------------------------ Media Queries */
+
+/* Slightly larger container in xl screens */
+@media (min-width: 1200px) {
+    .fixed-top-desktop-only {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    .header-container {
+        padding-top: 164px;
+    }
+}
