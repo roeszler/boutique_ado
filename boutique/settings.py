@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # Specifically handles logging in via social media providers like Facebook
     # and Google:
     'allauth.socialaccount',
+    'home_app',
 ]
 
 MIDDLEWARE = [
@@ -65,13 +66,16 @@ ROOT_URLCONF = 'boutique.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates', 'allauth'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 #allows allauth and django itself to access the HTTP 'request' object in our templates:
-                'django.template.context_processors.request', # required by allauth
+                'django.template.context_processors.request',  # required by allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
