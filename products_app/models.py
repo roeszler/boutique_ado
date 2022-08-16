@@ -19,10 +19,10 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    """ 
+    """
     Product display model for the .json fixtures in products_app to go in.
     Foreign key to the category model above, null in DB and blank in forms.
-    if a category is deleted, any products that use it will to have null 
+    if a category is deleted, any products that use it will to have null
     for category field rather than deleting the product.
     """
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
