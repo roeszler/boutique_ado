@@ -1,7 +1,7 @@
 from django.db import models
 
 class Category(models.Model):
-    """ Model for the fixtures in products_app to go in """
+    """ Category display model for the fixtures in products_app to go in """
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=True, blank=True)  # optional
 
@@ -15,7 +15,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     """ 
-    Product model for the .json fixtures in products_app to go in.
+    Product display model for the .json fixtures in products_app to go in.
     Foreign key to the category model above, null in DB and blank in forms.
     if a category is deleted, any products that use it will to have null 
     for category field rather than deleting the product.
