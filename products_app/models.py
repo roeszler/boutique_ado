@@ -3,7 +3,7 @@ from django.db import models
 class Category(models.Model):
     """ Model for the fixtures in products_app to go in """
     name = models.CharField(max_length=254)
-    friendly_name = models.CharField(max_length=254, null=True, blank=True)  # friendly name is optional
+    friendly_name = models.CharField(max_length=254, null=True, blank=True)  # optional
 
     def __str__(self):
         """ Takes in category model and returns name """
@@ -15,9 +15,17 @@ class Category(models.Model):
 
 class Product(models.Model):
     """ 
-    Model for the fixtures in products_app to go in.
+    Product model for the .json fixtures in products_app to go in.
     Foreign key to the category model above, null in DB and blank in forms.
     if a category is deleted, any products that use it will to have null 
     for category field rather than deleting the product.
     """
     category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+    # Fields directly from the products.json file
+    sku = models.CharField(max_length=254, null=True, blank=True)
+    name = models.CharField(max_length=254)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    image_url = models.URLField(max_length=1024, null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
