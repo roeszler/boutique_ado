@@ -21,6 +21,6 @@ from django.conf.urls.static import static  # to link up our static and media fi
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('', include('home_app.urls')),  # tells it to look in the app directory home_app/urls.py
-    path('products/', include('products_app.urls')),  # tells it to look in the app directory home_app/urls.py
+    path('', include('home_app.urls')),  # tells it to look in the app dir home_app/urls.py
+    path('products/', include('products_app.urls')),  # look in the app dir products_app/urls.py
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
