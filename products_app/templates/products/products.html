@@ -62,10 +62,44 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- creating a horizontal divider that is adaptive to screen size with margin bottom 5px-->
+                <!-- will prevent this column from rendering on everything except extra small screens -->
+                {% if forloop.counter|divisibleby:1 %}
+                <div class="col-12 d-sm-none mb-5">
+                    <hr>
+                </div>
+                {% endif %}
+
+                <!-- 
+                    display: none by default. Hidden on extra small screens and display block on small screens and larger.
+                    Will render on screens where there are more than two products in a row. Render only when the iteration 
+                    number of the loop is divisible by two.
+                -->
+                {% if forloop.counter|divisibleby:2 %}
+                <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
+                    <hr>
+                </div>
+                {% endif %}
+
+                <!-- for lg screen sizes display as a block, display none otherwise -->
+                {% if forloop.counter|divisibleby:3 %}
+                <div class="col-12 d-none d-lg-block d-xl-none mb-5">
+                    <hr>
+                </div>
+                {% endif %}
+
+                <!-- for xl screen sizes display as a block, display none otherwise -->
+                {% if forloop.counter|divisibleby:4 %}
+                <div class="col-12 d-none d-xl-block mb-5">
+                    <hr>
+                </div>
+                {% endif %}
+
                 {% endfor %}
             </div>
         </div>
     </div>
-    </div>
+</div>
 </div>
 {% endblock %}
