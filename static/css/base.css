@@ -103,3 +103,17 @@ unless we manually change it.
         padding-top: 164px;
     }
 }
+
+/*
+Pad the top with 116px when navbar is collapsed on mobile 
+116 is the height of the main site header on mobile.
+*/
+@media (max-width: 991px) {
+    .header-container {
+        padding-top: 116px;
+    }
+
+    body {
+        height: calc(100vh - 116px);
+    }
+}
