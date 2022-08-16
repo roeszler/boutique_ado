@@ -1,3 +1,4 @@
+<!-- button to open the search bar on mobile -->
 <li class="list-inline-item">
     <a href="#" class="text-black nav-link d-block d-lg-none" id="mobile-search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="text-center">
@@ -5,6 +6,7 @@
             <p class="my-0">Search</p>
         </div>
     </a>
+    <!-- search from -->
     <div class="dropdown-menu border-0 w-100 p-3 rounded-0 my-0" aria-labelledby="mobile-search">
         <form action="" class="form" method="GET">
             <div class="input-group w-100">
@@ -20,6 +22,8 @@
         </form>
     </div>
 </li>
+
+<!-- button to open account management dropdown menu -->
 <li class="list-inline-item dropdown">
     <a href="#" class="text-black nav-link d-block d-lg-none" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="text-center">
@@ -32,7 +36,7 @@
             {% if request.user.is_superuser %}
                 <a href="{% url account_logout %}" class="dropdown-item">Product Management</a>
             {% endif %}
-            <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
+            <a href="" class="dropdown-item">My Profile</a>
             <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
         {% else %}
             <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
@@ -40,6 +44,8 @@
         {% endif %}
     </div>
 </li>
+
+<!-- button to access the shopping cart -->
 <li class="list-inline-item">
     <a class="{% if grand_total %}text-primary font-weight-bold{% else %}text-black{% endif %} nav-link d-block d-lg-none" href="">
         <div class="text-center">
