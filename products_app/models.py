@@ -2,6 +2,10 @@ from django.db import models
 
 class Category(models.Model):
     """ Category display model for the fixtures in products_app to go in """
+    class Meta:
+        """ to adjust the verbose name or the plural form from the Django defaults """
+        verbose_name_plural = 'Categories'
+    
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=True, blank=True)  # optional
 
