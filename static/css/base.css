@@ -62,6 +62,10 @@ unless we manually change it.
     border: 1px solid #000 !important;
 }
 
+.bg-black {
+    background: #000 !important;
+}
+
 /* ------------------------ Media Queries */
 
 /* Slightly larger container in xl screens */
