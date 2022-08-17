@@ -31,7 +31,41 @@
     <!-- product container -->
     <div class="row">
         <div class="product-container col-10 offset-1">
-            <div class="row mt-1 mb-2"></div>
+            
+            <!-- Display sort options for the products page and our search result count -->
+            <div class="row mt-1 mb-2">
+                
+                <!-- sort select box order-md-last makes the last column on medium and larger screens. -->
+                <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+                    
+                    <!-- 
+                        sort select box - checking the value of the current sorting template variable.
+                        the one we're returning from the view which will have the value of none_none if no sorting selected.
+                    -->
+                    <div class="sort-select-wrapper w-50">
+                        <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
+                            <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
+                            <option value="price_ascending" {% if current_sorting == 'price_ascending' %}selected{% endif %}>Price (low to high)</option>
+                            <option value="price_descending" {% if current_sorting == 'price_descending' %}selected{% endif %}>Price (high to low)</option>
+                            <option value="rating_ascending" {% if current_sorting == 'rating_ascending' %}selected{% endif %}>Rating (low to high)</option>
+                            <option value="rating_descending" {% if current_sorting == 'rating_descending' %}selected{% endif %}>Rating (high to low)</option>
+                            <option value="name_ascending" {% if current_sorting == 'name_ascending' %}selected{% endif %}>Name (A-Z)</option>
+                            <option value="name_descending" {% if current_sorting == 'name_descending' %}selected{% endif %}>Name (Z-A)</option>
+                            <option value="category_ascending" {% if current_sorting == 'category_ascending' %}selected{% endif %}>Category (A-Z)</option>
+                            <option value="category_descending" {% if current_sorting == 'category_descending' %}selected{% endif %}>Category (Z-A)</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- sort select box on top on mobile order-md-first classes -->
+                <div class="col-12 col-md-6 order-md-first">
+                    <p class="text-muted mt-3 text-center text-md-left">
+                        {% if search_term or current_categories or current_sorting != 'None_None' %}
+                            <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
+                        {% endif %}
+                        {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+                    </p>
+                </div>
+            </div>
             <div class="row">
                 {% for product in products %}
                     <!-- colum divisions / layout -->
