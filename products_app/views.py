@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db.models import Q  # object to generate a search query
-from .models import Product
+from .models import Product, Category
 
-# Create your views here.
 
 def all_products(request):
     """ A view to show all products, including sorting and search queries """
     products = Product.objects.all()
     query = None  # ensures no error when loading without a search_term
+    categories = None  # ensures no error when loading without a search_term
 
 # To return results where the query was matched in either the product name OR
 # the description. The OR logic is derived through 'Q'.
@@ -25,11 +25,16 @@ def all_products(request):
             # and the i makes the case insensitive
             queries = Q(name__icontains=query) | Q(description__icontains=query)
             products = products.filter(queries)
+        
+        if 'category' in request.GET:
+            categories = request.GET['category'].split(',')  # split into a list at the commas
+            products = products.filter(category__name__in=categories)  # use list to filter current query to only products whose category 'name' is in the list.
+            categories = Category.objects.filter(name__in=categories)  # filter all categories down to the ones whose name is in the list from the URL.
 
     context = {
         'products': products,
         'search_term': query,
-
+        'current_categories': categories,
     }
     return render(request, 'products/products.html', context)
 
