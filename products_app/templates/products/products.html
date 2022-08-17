@@ -56,12 +56,16 @@
                         </select>
                     </div>
                 </div>
-                <!-- sort select box on top on mobile order-md-first classes -->
+                <!-- Product count and search results sort select box on top on mobile order-md-first classes -->
                 <div class="col-12 col-md-6 order-md-first">
                     <p class="text-muted mt-3 text-center text-md-left">
                         {% if search_term or current_categories or current_sorting != 'None_None' %}
-                            <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
+                        <!-- 3. Link to go back to the main products page. -->
+                        <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
                         {% endif %}
+                        
+                        <!-- 1. Length built-in template filter to count the number of products -->
+                        <!-- 2. If there's a search term, to indicate what the user searched for -->
                         {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
                     </p>
                 </div>
