@@ -41,6 +41,12 @@ def all_products(request):
             if sortkey == 'name':
                 sortkey = 'lower_name_annotation'
                 products = products.annotate(lower_name_annotation=Lower('name'))
+            
+            # Categories to be sorted by name instead of their ids
+            if sortkey == 'category':
+                sortkey = 'category__name'
+                # double underscore allows us to drill into a related model, effectively changing
+                # products = products.order_by(sortkey) to ...order_by(category__name)
 
             # To check whether direction is descending
             if 'direction' in request.GET:
