@@ -76,6 +76,11 @@ unless we manually change it.
 	z-index: -1; /* to make sure it sits behind all the content */
 }
 
+a.category-badge > span.badge:hover {
+    background: #212529 !important;
+    color: #fff !important;
+}
+
 /* ------------------------ Media Queries */
 
 /* Slightly larger container in xl screens */
