@@ -63,7 +63,7 @@
                         <!-- 3. Link to go back to the main products page. -->
                         <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
                         {% endif %}
-                        
+
                         <!-- 1. Length built-in template filter to count the number of products -->
                         <!-- 2. If there's a search term, to indicate what the user searched for -->
                         {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
@@ -161,4 +161,42 @@
     </div>
 </div>
 </div>
+{% endblock %}
+
+{% block postload_js %}
+<!-- will ensure we append this code to anything already in the block as opposed to replacing it. -->
+{{ block.super }}
+<!-- Js for splitting the sort and direction parameters in the sort by dropdown written using JQuery -->
+<script type="text/javascript">
+    // capture the change event from the source locator
+    $('#sort-selector').change(function () {
+        let selector = $(this);
+
+        // new url object that takes in the current Windows location the ability to replace the current
+        // GET parameters which is required in order to update the sorting methodology:
+        let currentUrl = new URL(window.location);
+
+        let selectedVal = selector
+    .val(); // refers to the value attribute from the option element selected in the selector box.
+        // to determine if the selected value is reset, to reset the sorting to the default.
+        if (selectedVal != 'reset') {
+            let sort = selectedVal.split('_')[0]; // first item split is that which we are sorting on
+            let direction = selectedVal.split('_')[1]; // first item split is the direction (ascending or descending)
+
+            // Using .set method to replace GET parameters in the URL
+            currentUrl.searchParams.set('sort', sort);
+            currentUrl.searchParams.set('direction', direction);
+
+            // replace the current URL with the newly constructed one:
+            window.location.replace(currentUrl);
+        } else {
+            // if user has selected reset option, delete sort and direction GET parameters
+            currentUrl.searchParams.delete('sort');
+            currentUrl.searchParams.delete('direction');
+
+            // replace the current URL with the newly constructed one:
+            window.location.replace(currentUrl);
+        }
+    })
+</script>
 {% endblock %}
