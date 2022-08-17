@@ -8,7 +8,7 @@ def bag_contents(request):
     to all templates across the entire bag_app application via adding
     it to the TEMPLATES variable in settings.py
     """
-    bag_contents = []
+    bag_items = []
     total = 0
     product_count = 0
 
@@ -25,7 +25,7 @@ def bag_contents(request):
 
     # add to context so they will be available to templates across the project
     context = {
-        'bag_contents': bag_contents,
+        'bag_items': bag_items,
         'total': total,
         'product_count': product_count,
         'delivery': delivery,
