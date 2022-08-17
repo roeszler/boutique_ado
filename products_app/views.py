@@ -8,6 +8,7 @@ from .models import Product
 def all_products(request):
     """ A view to show all products, including sorting and search queries """
     products = Product.objects.all()
+    query = None  # ensures no error when loading without a search_term
 
 # To return results where the query was matched in either the product name OR
 # the description. The OR logic is derived through 'Q'.
@@ -19,9 +20,16 @@ def all_products(request):
             if not query:
                 messages.error(request, "You didn't enter any search criteria!")
                 return redirect(reverse('products'))
+            
+            # Where the name contains the query OR the description contains the query
+            # and the i makes the case insensitive
+            queries = Q(name__icontains=query) | Q(description__icontains=query)
+            products = products.filter(queries)
 
     context = {
         'products': products,
+        'search_term': query,
+
     }
     return render(request, 'products/products.html', context)
 
