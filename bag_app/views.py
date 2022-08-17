@@ -28,7 +28,6 @@ def add_to_bag(request, item_id):
     
     # update the bag variable into the session [ a python dictionary ].
     request.session['bag'] = bag
-    # print(request.session['bag'])  # to test
 
     # Redirect the user back to the redirect URL
     return redirect(redirect_url)
