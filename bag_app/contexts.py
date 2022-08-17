@@ -22,7 +22,7 @@ def bag_contents(request):
         total += quantity * product.price  # add calc to add to total
         product_count += quantity  # increase product count by quantity
 
-        # add a dictionary to the list of bag items containing not only the id and the quantity, 
+        # add a dictionary to the list of bag items containing not only the id and the quantity,
         # but also the product object itself, allowing access to product items when iterating
         # through bag items in our templates
         bag_items.append({
