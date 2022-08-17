@@ -12,160 +12,174 @@
 {% block content %}
 <!-- <h1 class="display-4 text-success">Product Page works!</h1> -->
 <div class="overlay"></div>
-<div class="container-fluid">
-    <!-- product heading  -->
-    <div class="row">
-        <div class="col text-center mt-3">
-            <h2 class="logo-font">Products</h2>
-            
-            <!-- Categories bar under products heading -->
-            {% for c in current_categories %}
-            <a class="category-badge text-decoration-none" href="{% url 'products' %}?category={{ c.name }}">
-                <span class="p-2 mt-2 badge badge-white text-black rounded-0 border border-dark">{{ c.friendly_name }}</span>
-            </a>
-            {% endfor %}
-
-            <hr class="w-50 mb-1">
-        </div>
-    </div>
-    <!-- product container -->
-    <div class="row">
-        <div class="product-container col-10 offset-1">
-            
-            <!-- Display sort options for the products page and our search result count -->
-            <div class="row mt-1 mb-2">
+    <div class="container-fluid">
+        <!-- product heading  -->
+        <div class="row">
+            <div class="col text-center mt-3">
+                <h2 class="logo-font">Products</h2>
                 
-                <!-- sort select box order-md-last makes the last column on medium and larger screens. -->
-                <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
-                    
-                    <!-- 
-                        sort select box - checking the value of the current sorting template variable.
-                        the one we're returning from the view which will have the value of none_none if no sorting selected.
-                    -->
-                    <div class="sort-select-wrapper w-50">
-                        <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
-                            <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
-                            <option value="price_ascending" {% if current_sorting == 'price_ascending' %}selected{% endif %}>Price (low to high)</option>
-                            <option value="price_descending" {% if current_sorting == 'price_descending' %}selected{% endif %}>Price (high to low)</option>
-                            <option value="rating_ascending" {% if current_sorting == 'rating_ascending' %}selected{% endif %}>Rating (low to high)</option>
-                            <option value="rating_descending" {% if current_sorting == 'rating_descending' %}selected{% endif %}>Rating (high to low)</option>
-                            <option value="name_ascending" {% if current_sorting == 'name_ascending' %}selected{% endif %}>Name (A-Z)</option>
-                            <option value="name_descending" {% if current_sorting == 'name_descending' %}selected{% endif %}>Name (Z-A)</option>
-                            <option value="category_ascending" {% if current_sorting == 'category_ascending' %}selected{% endif %}>Category (A-Z)</option>
-                            <option value="category_descending" {% if current_sorting == 'category_descending' %}selected{% endif %}>Category (Z-A)</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- Product count and search results sort select box on top on mobile order-md-first classes -->
-                <div class="col-12 col-md-6 order-md-first">
-                    <p class="text-muted mt-3 text-center text-md-left">
-                        {% if search_term or current_categories or current_sorting != 'None_None' %}
-                        <!-- 3. Link to go back to the main products page. -->
-                        <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
-                        {% endif %}
+                <!-- Categories bar under products heading -->
+                {% for c in current_categories %}
+                <a class="category-badge text-decoration-none" href="{% url 'products' %}?category={{ c.name }}">
+                    <span class="p-2 mt-2 badge badge-white text-black rounded-0 border border-dark">{{ c.friendly_name }}</span>
+                </a>
+                {% endfor %}
 
-                        <!-- 1. Length built-in template filter to count the number of products -->
-                        <!-- 2. If there's a search term, to indicate what the user searched for -->
-                        {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
-                    </p>
-                </div>
+                <hr class="w-50 mb-1">
             </div>
-            <div class="row">
-                {% for product in products %}
-                    <!-- colum divisions / layout -->
-                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
-                        <div class="card h-100 border-0">
-                            <!-- Card top with image -->
-                            {% if product.image %}
-                            <a href="{% url 'product_detail' product.id %}">
-                                <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
-                            </a>
-                            {% else %}
-                            <a href="{% url 'product_detail' product.id %}">
-                                <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png"
-                                    alt="{{ product.name }}">
-                            </a>
+        </div>
+        <!-- product container -->
+        <div class="row">
+            <div class="product-container col-10 offset-1">
+                
+                <!-- Display sort options for the products page and our search result count -->
+                <div class="row mt-1 mb-2">
+                    
+                    <!-- sort select box order-md-last makes the last column on medium and larger screens. -->
+                    <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+                        
+                        <!-- 
+                            sort select box - checking the value of the current sorting template variable.
+                            the one we're returning from the view which will have the value of none_none if no sorting selected.
+                        -->
+                        <div class="sort-select-wrapper w-50">
+                            <select id="sort-selector" class="custom-select custom-select-sm rounded-0 border border-{% if current_sorting != 'None_None' %}info{% else %}black{% endif %}">
+                                <option value="reset" {% if current_sorting == 'None_None' %}selected{% endif %}>Sort by...</option>
+                                <option value="price_ascending" {% if current_sorting == 'price_ascending' %}selected{% endif %}>Price (low to high)</option>
+                                <option value="price_descending" {% if current_sorting == 'price_descending' %}selected{% endif %}>Price (high to low)</option>
+                                <option value="rating_ascending" {% if current_sorting == 'rating_ascending' %}selected{% endif %}>Rating (low to high)</option>
+                                <option value="rating_descending" {% if current_sorting == 'rating_descending' %}selected{% endif %}>Rating (high to low)</option>
+                                <option value="name_ascending" {% if current_sorting == 'name_ascending' %}selected{% endif %}>Name (A-Z)</option>
+                                <option value="name_descending" {% if current_sorting == 'name_descending' %}selected{% endif %}>Name (Z-A)</option>
+                                <option value="category_ascending" {% if current_sorting == 'category_ascending' %}selected{% endif %}>Category (A-Z)</option>
+                                <option value="category_descending" {% if current_sorting == 'category_descending' %}selected{% endif %}>Category (Z-A)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Product count and search results sort select box on top on mobile order-md-first classes -->
+                    <div class="col-12 col-md-6 order-md-first">
+                        <p class="text-muted mt-3 text-center text-md-left">
+                            {% if search_term or current_categories or current_sorting != 'None_None' %}
+                            <!-- 3. Link to go back to the main products page. -->
+                            <span class="small"><a href="{% url 'products' %}">Products Home</a> | </span>
                             {% endif %}
 
-                            <!-- Card Body indicates the product name -->
-                            <div class="card-body pb-0">
-                                <p class="mb-0">{{ product.name }}</p>
-                            </div>
+                            <!-- 1. Length built-in template filter to count the number of products -->
+                            <!-- 2. If there's a search term, to indicate what the user searched for -->
+                            {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for product in products %}
+                        <!-- colum divisions / layout -->
+                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                            <div class="card h-100 border-0">
+                                <!-- Card top with image -->
+                                {% if product.image %}
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}">
+                                </a>
+                                {% else %}
+                                <a href="{% url 'product_detail' product.id %}">
+                                    <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}noimage.png"
+                                        alt="{{ product.name }}">
+                                </a>
+                                {% endif %}
 
-                            <!-- Card Footer indicates the price and rating -->
-                            <div class="card-footer bg-white pt-0 border-0 text-left">
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="lead mb-0 text-left font-weight-bold">${{ product.price }}</p>
+                                <!-- Card Body indicates the product name -->
+                                <div class="card-body pb-0">
+                                    <p class="mb-0">{{ product.name }}</p>
+                                </div>
 
-                                        <!-- 
-                                            If the product has a category, we want to render it out using its friendly name as text
-                                            and programmatic name as the href 
-                                        -->
-                                        {% if product.category %}
-                                        <p class="small mt-1 mb-0">
-                                            <a class="text-muted" href="{% url 'products' %}?category={{ product.category.name }}">
-                                                <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
-                                            </a>
-                                        </p>
-                                        {% endif %}
+                                <!-- Card Footer indicates the price and rating -->
+                                <div class="card-footer bg-white pt-0 border-0 text-left">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="lead mb-0 text-left font-weight-bold">${{ product.price }}</p>
 
-                                        {% if product.rating %}
-                                        <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} /
-                                            5</small>
-                                        {% else %}
-                                        <small class="text-muted">No Rating</small>
-                                        {% endif %}
+                                            <!-- 
+                                                If the product has a category, we want to render it out using its friendly name as text
+                                                and programmatic name as the href 
+                                            -->
+                                            {% if product.category %}
+                                            <p class="small mt-1 mb-0">
+                                                <a class="text-muted" href="{% url 'products' %}?category={{ product.category.name }}">
+                                                    <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
+                                                </a>
+                                            </p>
+                                            {% endif %}
+
+                                            {% if product.rating %}
+                                            <small class="text-muted"><i class="fas fa-star mr-1"></i>{{ product.rating }} /
+                                                5</small>
+                                            {% else %}
+                                            <small class="text-muted">No Rating</small>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- creating a horizontal divider that is adaptive to screen size with margin bottom 5px-->
-                    <!-- will prevent this column from rendering on everything except extra small screens -->
-                    {% if forloop.counter|divisibleby:1 %}
-                    <div class="col-12 d-sm-none mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
+                        <!-- creating a horizontal divider that is adaptive to screen size with margin bottom 5px-->
+                        <!-- will prevent this column from rendering on everything except extra small screens -->
+                        {% if forloop.counter|divisibleby:1 %}
+                        <div class="col-12 d-sm-none mb-5">
+                            <hr>
+                        </div>
+                        {% endif %}
 
-                    <!-- 
-                        display: none by default. Hidden on extra small screens and display block on small screens and larger.
-                        Will render on screens where there are more than two products in a row. Render only when the iteration 
-                        number of the loop is divisible by two.
-                    -->
-                    {% if forloop.counter|divisibleby:2 %}
-                    <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
+                        <!-- 
+                            display: none by default. Hidden on extra small screens and display block on small screens and larger.
+                            Will render on screens where there are more than two products in a row. Render only when the iteration 
+                            number of the loop is divisible by two.
+                        -->
+                        {% if forloop.counter|divisibleby:2 %}
+                        <div class="col-12 d-none d-sm-block d-md-block d-lg-none mb-5">
+                            <hr>
+                        </div>
+                        {% endif %}
 
-                    <!-- for lg screen sizes display as a block, display none otherwise -->
-                    {% if forloop.counter|divisibleby:3 %}
-                    <div class="col-12 d-none d-lg-block d-xl-none mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
+                        <!-- for lg screen sizes display as a block, display none otherwise -->
+                        {% if forloop.counter|divisibleby:3 %}
+                        <div class="col-12 d-none d-lg-block d-xl-none mb-5">
+                            <hr>
+                        </div>
+                        {% endif %}
 
-                    <!-- for xl screen sizes display as a block, display none otherwise -->
-                    {% if forloop.counter|divisibleby:4 %}
-                    <div class="col-12 d-none d-xl-block mb-5">
-                        <hr>
-                    </div>
-                    {% endif %}
-                    
-                {% endfor %}
+                        <!-- for xl screen sizes display as a block, display none otherwise -->
+                        {% if forloop.counter|divisibleby:4 %}
+                        <div class="col-12 d-none d-xl-block mb-5">
+                            <hr>
+                        </div>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Back to top link -->
+    <div class="btt-button shadow-sm rounded-0 border border-grey">
+        <a class="btt-link d-flex h-100">
+            <i class="fas fa-chevron-up text-black mx-auto my-auto"></i>
+        </a>	
+    </div>
 </div>
 {% endblock %}
 
 {% block postload_js %}
 <!-- will ensure we append this code to anything already in the block as opposed to replacing it. -->
 {{ block.super }}
+<!-- Js to handle the click function for back to top link. -->
+<script type="text/javascript">
+    $('.btt-link').click(function(e) {
+        window.scrollTo(0,0);
+    })
+</script>
+
 <!-- Js for splitting the sort and direction parameters in the sort by dropdown written using JQuery -->
 <script type="text/javascript">
     // capture the change event from the source locator
