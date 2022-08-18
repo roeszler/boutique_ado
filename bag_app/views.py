@@ -54,7 +54,7 @@ def add_to_bag(request, item_id):
 
 
 def adjust_bag(request, item_id):
-    """ Adjust the quantity of the specified product to the specific amount """
+    """Adjust the quantity of the specified product to the specified amount"""
 
     quantity = int(request.POST.get('quantity'))
     size = None
@@ -77,7 +77,7 @@ def adjust_bag(request, item_id):
         if quantity > 0:
             bag[item_id] = quantity
         else:
-            bag.pop[item_id]
+            bag.pop(item_id)
     
     request.session['bag'] = bag  # update the bag variable into the session [ a python dictionary ]
     return redirect(reverse('view_bag'))  # Redirect the user back view_bag URL
