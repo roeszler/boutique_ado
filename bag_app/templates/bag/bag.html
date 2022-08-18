@@ -110,7 +110,7 @@
                                 Simple <a> controls to remove quantity with w/ action controlled by Js listening for a click in postloadjs block.
                                 Id to to discern which specific item the customer wants to remove if there are multiple sizes of this item in the bag: 
                             -->
-                            <a class="remove-item text-danger" id="remove_{{ item.item_id }}" data-product_size="{{ item.size }}"><small>Delete Items</small></a>
+                            <a class="remove-item text-danger" id="remove_{{ item.item_id }}" data-product_size="{{ item.size }}"><small>Delete Item</small></a>
                         </td>
                         <td class="py-3">
                             <p class="my-0">${{ item.product.price | calc_subtotal:item.quantity }}</p>
