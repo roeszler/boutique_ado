@@ -59,7 +59,7 @@
                         <td class="py-3 w-25">
                             <!-- <p class="my-0">{{ item.quantity }}</p> -->
                             <!-- quantity selector box allowing update the quantity from shopping bag -->
-                            <form class="form update-form" method="POST" action="">
+                            <form class="form update-form" method="POST" action="{% url 'adjust_bag' item.item_id %}">
                                 {% csrf_token %}
 
                                 <div class="form-group">
