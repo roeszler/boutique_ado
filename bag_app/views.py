@@ -14,7 +14,7 @@ def add_to_bag(request, item_id):
     redirect_url = request.POST.get('redirect_url')
     size = None
     if 'product_size' in request.POST:
-        size = request.POST['size']  # set size to equal request.POST if it exists
+        size = request.POST['product_size']  # set size to equal request.POST if it exists
 
     # session until client and server are done communicating
     # allows shopping bag to persist until session is closed.

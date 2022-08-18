@@ -18,19 +18,38 @@ def bag_contents(request):
 
     # to iterate the shopping bag, tally up the total cost and product count and 
     # add the products and their data to the bag items list:
-    for item_id, quantity in bag.items():  # nb: in the bag from the 'session'!
-        product = get_object_or_404(Product, pk=item_id)  # get the product
-        total += quantity * product.price  # add calc to add to total
-        product_count += quantity  # increase product count by quantity
+    for item_id, item_data in bag.items():  # nb: in the bag from the 'session'!
 
-        # add a dictionary to the list of bag items containing not only the id and the quantity,
-        # but also the product object itself, allowing access to product items when iterating
-        # through bag items in our templates
-        bag_items.append({
-            'item_id': item_id,
-            'quantity': quantity,
-            'product': product,
-        })
+        # To only execute code if item has no sizes, check if item_data is an integer
+        if isinstance(item_data, int):
+            product = get_object_or_404(Product, pk=item_id)  # get the product
+            total += item_data * product.price  # add calc to add to total
+            product_count += item_data  # increase product count by quantity
+
+            # add a dictionary to the list of bag items containing not only the id and the quantity,
+            # but also the product object itself, allowing access to product items when iterating
+            # through bag items in our templates
+            bag_items.append({
+                'item_id': item_id,
+                'quantity': item_data,
+                'product': product,
+            })
+        else:
+            product = get_object_or_404(Product, pk=item_id)  # get the product
+
+            # the item is a dictionary (not an integer) and needs to iterate through
+            # inner dictionary, return no. of items and increment the product count and totals
+            # then render the size to the template
+            for size, quantity in item_data['items_by_size'].items():
+                total += quantity * product.price
+                product_count += quantity
+                bag_items.append({
+                'item_id': item_id,
+                'quantity': item_data,
+                'product': product,
+                'size': size,
+            })
+
 
     if total < settings.FREE_DELIVERY_THRESHOLD:
         delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
