@@ -56,7 +56,7 @@
                             <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
                         </td>
                         <td class="py-3">
-                            <p class="my-0">${{ item.product.price | calc_subtotal:item.quantity }}</p>
+                            <p class="my-0">${{ item.product.price }}</p>
                         </td>
                         <td class="py-3 w-25">
                             <!-- <p class="my-0">{{ item.quantity }}</p> -->
@@ -104,16 +104,16 @@
                                 Simple <a> controls to update quantity and submit the 
                                 form w/ action controlled by Js listening for a click in postloadjs block
                             -->
-                            <a class="update-link text-info float-rightmissing asdfsaf"><small>Update Qty</small></a>
+                            <a class="update-link text-info float-right"><small>Update Qty</small></a>
 
                             <!-- 
                                 Simple <a> controls to remove quantity with w/ action controlled by Js listening for a click in postloadjs block.
                                 Id to to discern which specific item the customer wants to remove if there are multiple sizes of this item in the bag: 
                             -->
-                            <a class="remove-item text-danger" id="remove_{{ item.item_id }}" data-product_size="{{ item.size }}"><small>Remove Qty</small></a>
+                            <a class="remove-item text-danger" id="remove_{{ item.item_id }}" data-product_size="{{ item.size }}"><small>Delete Items</small></a>
                         </td>
                         <td class="py-3">
-                            <p class="my-0">${{ item.product.price }}</p>
+                            <p class="my-0">${{ item.product.price | calc_subtotal:item.quantity }}</p>
                         </td>
                     </tr>
                     {% endfor %}
