@@ -140,7 +140,11 @@
 
     <!-- Message container -->
     {% if messages %}
-    <div class="message-container"></div>
+    <div class="message-container">
+        {% for message in messages %}
+            {% include 'includes/toasts/toast_success.html' %}
+        {% endfor %}
+    </div>
     {% endif %}
 
     <!-- subheader page underneath the main header -->
@@ -153,6 +157,17 @@
 
     <!-- Js to load at end -->
     {% block postloadjs %}
+
+    <!-- 
+        To call the toast method from bootstrap, with an option of show on any elements with the toast class. 
+        Ie: every page that loads will immediately call the show option on all toasts that have been rendered 
+        in the messages container. This explains why we have included block.super in our templates when 
+        overriding the postloadjs block.
+    -->
+    <script type="text/javascript">
+        $('.toast').toast('show');
+    </script>
+
     {% endblock %}
 
 </body>
