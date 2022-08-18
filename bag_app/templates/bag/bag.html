@@ -102,13 +102,13 @@
                                 Simple <a> controls to update quantity and submit the 
                                 form w/ action controlled by Js listening for a click in postloadjs block
                             -->
-                            <a class="update-link text-info"><small>Update Qty</small></a>
+                            <a class="update-link text-info float-right"><small>Update Qty</small></a>
 
                             <!-- 
                                 Simple <a> controls to remove quantity with w/ action controlled by Js listening for a click in postloadjs block.
                                 Id to to discern which specific item the customer wants to remove if there are multiple sizes of this item in the bag: 
                             -->
-                            <a class="remove-item text-danger float-right" id="remove_{{ item.item_id }}" data-size="{{ item.size }}"><small>Remove Qty</small></a>
+                            <a class="remove-item text-danger" id="remove_{{ item.item_id }}" data-product_size="{{ item.size }}"><small>Remove Qty</small></a>
                         </td>
                         <td class="py-3">
                             <p class="my-0">${{ item.product.price }}</p>
@@ -200,11 +200,11 @@
             let csrfToken = '{{ csrf_token }}';  // store csrf token as a string 
             let itemId = $(this).attr('id').split('remove_')[1];  // removing item Id by splitting the update link being clicked on at the '_' and taking the second half of it [1].
             let size = $(this).data('product_size');  // get the size using the .data method to pull it from the 'product_size' attribute.
-            let url = `/bag/remove/${itemId}`;  // template literal of the remove URL
+            let url = `/bag/remove/${itemId}/`;  // template literal of the remove URL
 
             // The CSRFmiddleware token key (containing the csrf_token and size) will match the field Django is expecting 
             // to see in request.post when we post it to the server:
-            let data = {'csrfmiddlewaretoken': csrfToken, 'size': size};  // object used to send data to the server. 
+            let data = {'csrfmiddlewaretoken': csrfToken, 'product_size': size};  // object used to send data to the server. 
 
             $.post(url, data) // to post data and URL to the server.
             .done(function() {  // function to re-load the page

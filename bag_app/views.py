@@ -106,6 +106,6 @@ def remove_from_bag(request, item_id):
 
         # Because view is posted to from a Js function, return an actual 200 HTTP response.
         return HttpResponse(status=200)
-        
+
     except Exception as error:
         return HttpResponse(status=500)
