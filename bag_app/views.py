@@ -1,5 +1,5 @@
 """ import modules """
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, HttpResponse
 
 # Create your views here.
 def view_bag(request):
@@ -71,6 +71,8 @@ def adjust_bag(request, item_id):
             bag[item_id]['items_by_size'][size] = quantity
         else:
             del bag[item_id]['items_by_size'][size]
+            if not bag[item_id]['items_by_size']:
+                bag.pop(item_id)
     # if no size
     else:
         # if no size, remove the item entirely by using the .pop function.
@@ -81,3 +83,29 @@ def adjust_bag(request, item_id):
     
     request.session['bag'] = bag  # update the bag variable into the session [ a python dictionary ]
     return redirect(reverse('view_bag'))  # Redirect the user back view_bag URL
+
+
+def remove_from_bag(request, item_id):
+    """Remove the item from the shopping bag"""
+    # In a try block to catch any exceptions that occur
+    try:
+        size = None
+        # if the user is removing a product with sizes, we only want to remove the specific size they requested.
+        if 'product_size' in request.POST:
+            size = request.POST['product_size']
+        bag = request.session.get('bag', {})
+
+        if size:
+            del bag[item_id]['items_by_size'][size]
+            if not bag[item_id]['items_by_size']:
+                bag.pop(item_id)  # remove the entire item_id size dictionary prevent it evaluating to false.
+        else:
+            bag.pop(item_id)
+
+        request.session['bag'] = bag
+
+        # Because view is posted to from a Js function, return an actual 200 HTTP response.
+        return HttpResponse(status=200)
+        
+    except Exception as error:
+        return HttpResponse(status=500)
