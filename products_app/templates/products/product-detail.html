@@ -63,8 +63,8 @@
 
                     <div class="form-row">
 
-                        {% with product.has_sizes as s %}
-                        {% if s %}
+                        {% with product.has_sizes as size %}
+                        {% if size %}
                         <div class="col-12">
                             <p><strong>Size:</strong></p>
                             <select class="form-control rounded-0 w-50" name="product_size" id='id_product_size'>
@@ -107,7 +107,7 @@
                         </div>
 
                         <!-- Contains the submit and keep shopping buttons for the form -->
-                        <div class="col{% if s %}-12 mt-2{% endif %}">
+                        <div class="col{% if size %}-12 mt-2{% endif %}">
                             <!-- keep shopping button -->
                             <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 mt-5">
                                 <span class="icon">
