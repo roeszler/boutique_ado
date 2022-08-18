@@ -194,8 +194,8 @@
         // Remove item and reload on click
         // Post some data to a url and once the response comes back from the server
         // reload the page to reflect the updated bag
-        // template variable {{}} - renders the actual element
-        // template tag {%%} - renders a hidden input field in a form
+        // template variable 'curly{ curly{ curly} curly}' - renders the actual element
+        // template tag 'curly{ percent% percent% curly}' - renders a hidden input field in a form
         $('.remove-item').click(function(element) {
             let csrfToken = '{{ csrf_token }}';  // store csrf token as a string 
             let itemId = $(this).attr('id').split('remove_')[1];  // removing item Id by splitting the update link being clicked on at the '_' and taking the second half of it [1].
