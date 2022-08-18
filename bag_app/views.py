@@ -1,5 +1,5 @@
 """ import modules """
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 
 # Create your views here.
 def view_bag(request):
@@ -52,3 +52,32 @@ def add_to_bag(request, item_id):
     # Redirect the user back to the redirect URL
     return redirect(redirect_url)
 
+
+def adjust_bag(request, item_id):
+    """ Adjust the quantity of the specified product to the specific amount """
+
+    quantity = int(request.POST.get('quantity'))
+    size = None
+    if 'product_size' in request.POST:
+        size = request.POST['product_size']  # set size to equal request.POST if it exists
+
+    # Trys to get this variable if it already exists or initializing it to an empty dictionary if it doesn't.
+    bag = request.session.get('bag', {})
+
+    # If a product with sizes is being added
+    if size:
+        # If item is in bag, set the items quantity accordingly, otherwise remove the item.
+        if quantity > 0:
+            bag[item_id]['items_by_size'][size] = quantity
+        else:
+            del bag[item_id]['items_by_size'][size]
+    # if no size
+    else:
+        # if no size, remove the item entirely by using the .pop function.
+        if quantity > 0:
+            bag[item_id] = quantity
+        else:
+            bag.pop[item_id]
+    
+    request.session['bag'] = bag  # update the bag variable into the session [ a python dictionary ]
+    return redirect(reverse('view_bag'))  # Redirect the user back view_bag URL
