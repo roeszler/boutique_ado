@@ -57,7 +57,47 @@
                             <p class="my-0">${{ item.product.price }}</p>
                         </td>
                         <td class="py-3 w-25">
-                            <p class="my-0">{{ item.quantity }}</p>
+                            <!-- <p class="my-0">{{ item.quantity }}</p> -->
+                            <!-- quantity selector box allowing update the quantity from shopping bag -->
+                            <form class="form update-form" method="POST" action="">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <div class="input-group input-group-{{ item.item_id }}">
+    
+                                        <!-- Minus 'prepend' button w/ attribute data-item_id -->
+                                        <div class="input-group-prepend">
+                                            <button
+                                                class="decrement-qty btn btn-sm btn-black rounded-0 decrement-qty_{{ item.item_id }}"
+                                                data-item_id="{{ item.item_id }}">
+                                                <span>
+                                                    <i class="fas fa-minus fa-sm"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+    
+                                        <!-- Detail view quantity to order field -->
+                                        <input class="form-control forn-control-sm qty_input id_qty_{{ item.item_id }}" type="number"
+                                            name="quantity" value="{{ item.quantity }}" min="1" max="99" data-item_id="{{ item.item_id }}">
+                                        
+                                        <!-- Plus 'append' button w/ attribute data-item_id -->
+                                        <div class="input-group-append">
+                                            <button
+                                                class="increment-qty btn btn-sm btn-black rounded-0 increment-qty_{{ item.item_id }}"
+                                                data-item_id="{{ item.item_id }}">
+                                                <span>
+                                                    <i class="fas fa-plus fa-sm"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        {% if item.product.has_sizes %}
+                                        <!-- to submit the size of the item the user wants to update or remove in a hidden input field. -->
+                                        <input type="hidden" name="product_size" value="{{ item.size }}">
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </form>
                         </td>
                         <td class="py-3">
                             <p class="my-0">${{ item.product.price }}</p>
@@ -121,4 +161,11 @@
         </div>
     </div>
 </div>
+{% endblock %}
+<!-- To include the postload Js -->
+{% block postloadjs %}
+<!-- Include the parent block -->
+{{ block.super }}
+<!-- Include the quantity_input_script.html code -->
+{% include 'products/includes/quantity_input_script.html' %}
 {% endblock %}
