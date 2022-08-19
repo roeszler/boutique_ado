@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 
 from .forms import OrderForm
+from bag_app.contexts import bag_contents
 
 # Create your views here.
 def checkout(request):
@@ -12,6 +13,11 @@ def checkout(request):
         messages.error(request, "There's nothing in your shopping bag at the moment")
         return redirect(reverse('products'))  # prevent people from manually accessing the URL by typing '/checkout'
     
+    # Part of the function to calculate the current bag total in the view.
+    current_bag = bag_contents(request)
+    total = current_bag['grand_total'] # get total from accessing the grand_total key out of the current bag
+    stripe_total = round(total * 100) # Since stripe will require the amount to charge as an integer.
+
     order_form = OrderForm()
     template = 'checkout/checkout.html'
     context = {
