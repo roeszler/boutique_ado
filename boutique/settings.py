@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'products_app',
     'bag_app',
     'checkout_app',
+
+    # Other
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +68,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'boutique.urls'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     {
@@ -83,6 +88,13 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'bag_app.contexts.bag_contents',  # context processor to make 'bag_contents' accessible to all templates 
             ],
+
+            # A list to contain all the tags we want from crispy_forms to
+            # be available in all our templates by default:
+            'builtins': [
+                'crispy_forms.templatetags.crispy_forms_tags',
+                'crispy_forms.templatetags.crispy_forms_field',
+            ]
         },
     },
 ]
