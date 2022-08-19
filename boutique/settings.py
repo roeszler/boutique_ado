@@ -86,6 +86,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',  # required by allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',  # To access the no image file in the media folder if a product doesn't have an image.
                 'bag_app.contexts.bag_contents',  # context processor to make 'bag_contents' accessible to all templates 
             ],
 
