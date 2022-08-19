@@ -5,6 +5,7 @@ from .models import Order
 
 
 class OrderFrom(forms.ModelForm):
+    """ To customize the imported django form to our needs """
     class Meta:
         """ Tell Django its associations and editable user input fields """
         model = Order
