@@ -7,6 +7,11 @@ from django.conf import settings
 
 from products_app.model import Product
 
+# when a user checks out:
+# First use the information they put into the payment form to create an order instance.
+# And iterate through the items in the shopping bag.
+# Creating an order line item for each one. Attaching it to the order.
+# And updating the delivery cost, order total, and grand total.
 
 class Order(models.Model):
     """ Define the variables that allow us to create and track orders """
@@ -25,12 +30,37 @@ class Order(models.Model):
     order_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, null=False, default=0)
 
+    def _generate_order_number(self):
+        """ 
+        Generate a random, unique order number using UUID.
+        underscore indicates that it is a private method which will only
+        be used inside this class.
+        """
+        return uuid.uuid4().hex.upper()  # to generate a random string of 32 numbers we can use as an Order No.
 
-# when a user checks out:
-# First use the information they put into the payment form to create an order instance.
-# And iterate through the items in the shopping bag.
-# Creating an order line item for each one. Attaching it to the order.
-# And updating the delivery cost, order total, and grand total.
+    def update_total(self):
+        """
+        Update grand total each time the line item is added,
+        accounting for delivery costs
+        """
+        self.order_total = self.lineitems.aggregate(Sum('lineitem_total'))['lineitem_total__sum']
+        if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
+            self.delivery_cost = self.order_total * settings.STANDARD_DELIVERY_PERCENTAGE / 100
+        else:
+            self.delivery_cost = 0
+        self.grand_total = self.order_total + self.delivery_cost
+        self.save()
+    
+    def save(self, *args, **kwargs):
+        """
+        To override the default save method to create the 
+        Order No. if it hasn't been set already.
+        """
+        if not self.order_number:
+            self.order_number = self._generate_order_number()
+        # execute the original save method
+        super().save(*args, **kwargs)
+
 
 class OrderLineItem(models.Model):
     """ controls individual shopping bag items in the Order model """
