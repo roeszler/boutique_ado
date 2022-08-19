@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bag_tools %}
 
 {% block extra_css %}
     <!-- <link rel="stylesheet" href="{% static 'checkout_app/css/checkout.css' %}"> -->
@@ -31,6 +32,74 @@
 
     <!-- Order Form content -->
     <div class="row">
+
+        <!-- Div containing the order summary will show up on the right of larger screens -->
+        <div class="col-12 col-lg-6 order-lg-last mb-5">
+            <!-- Order Summary Header and simple colum headers -->
+            <p class="text-muted">Order Summary ({{ product_count }})</p>
+            <div class="row">
+                <div class="col-7 offset-2">
+                    <p class="mb-1 mt-0 small text-muted">Item</p>
+                </div>
+                <div class="col-3 text-right">
+                    <p class="mb-1 mt-0 small text-muted">Subtotal</p>
+                </div>
+            </div>
+
+            <!--
+                As we have access to all bag items through context processor:
+                Loop through each item creating a row with the image.
+            -->
+            {% for item in bag_items %}
+
+            <div class="row">
+
+                <!-- Row with image -->
+                <div class="col-2 mb-1">
+                    <a href="{% url 'product_detail' item.product.id %}">
+                        {% if item.product.image %}
+                        <img class="w-100" src="{{ item.product.image.url }}" alt="{{ product.name }}">
+                        {% else %}
+                        <img class="w-100" src="{{ MEDIA_URL }}noimage.png" alt="{{ product.name }}">
+                        {% endif %}
+                    </a>
+                </div>
+
+                <!-- Info about product -->
+                <div class="col-7">
+                    <p class="my-0"><strong>{{ item.product.name }}</strong></p>
+                    <p class="my-0 small">Size:
+                        {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}N/A{% endif %}</p>
+                    <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
+                </div>
+
+                <!-- Info about subtotal -->
+                <div class="col-3 text-right">
+                    <p class="my-0 small text-muted">${{ item.product.price | calc_subtotal:item.quantity }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Marginless Horizontal rule  -->
+            <hr class="my-0">
+
+            <!-- A summary row containing the totals and delivery cost for the order -->
+            <div class="row text-black text-right">
+                <div class="col-7 offset-2">
+                    <p class="my-0">Order Total:</p>
+                    <p class="my-0">Delivery:</p>
+                    <p class="my-0">Grand Total:</p>
+                </div>
+                <div class="col-3">
+                    <p class="my-0">${{ total | floatformat:2 }}</p>
+                    <p class="my-0">${{ delivery | floatformat:2 }}</p>
+                    <p class="my-0"><strong>${{ grand_total | floatformat:2 }}</strong></p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Div containing the form -->
         <div class="col-12 col-lg-6">
             <!-- To render the table only if there is something in the shopping bag -->
             <p class="text-muted">Please fill out the form below to complete your order</p>
@@ -88,19 +157,25 @@
                 </fieldset>
 
                 <!-- Submit button -->
-                <div class="submit-button text-right mt-5 mb-2">                    
+                <div class="submit-button text-right mt-5 mb-2">
+
+                    <!-- link back to shopping back in case of order adjustments -->
                     <a href="{% url 'view_bag' %}" class="btn btn-outline-black rounded-0">
                         <span class="icon">
                             <i class="fas fa-chevron-left"></i>
                         </span>
                         <span class="font-weight-bold">Adjust Bag</span>
                     </a>
+
+                    <!-- Submit button accessed with Js via Id -->
                     <button id="submit-button" class="btn btn-black rounded-0">
                         <span class="font-weight-bold">Complete Order</span>
                         <span class="icon">
                             <i class="fas fa-lock"></i>
                         </span>
                     </button>
+
+                    <!-- Notification alert that card will be charged -->
                     <p class="small text-danger my-0">
                         <span class="icon">
                             <i class="fas fa-exclamation-circle"></i>
