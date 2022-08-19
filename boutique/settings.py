@@ -202,6 +202,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# ------------ Stripe
+
 # To calculate delivery costs
 FREE_DELIVERY_THRESHOLD = 50
 STANDARD_DELIVERY_PERCENTAGE = 10
+
+STRIPE_CURRENCY = 'usd'
+
+# STRIPE_PUBLIC_KEY_BOUTIQUE = os.getenv('STRIPE_PUBLIC_KEY_BOUTIQUE', '')  # key with empty default value
+# STRIPE_SECRET_KEY_BOUTIQUE = os.getenv('STRIPE_SECRET_KEY_BOUTIQUE', '')  # key with empty default value
+
+STRIPE_PUBLIC_KEY_BOUTIQUE = os.environ.get('STRIPE_PUBLIC_KEY_BOUTIQUE', '')  # key with empty default value
+STRIPE_SECRET_KEY_BOUTIQUE = os.environ.get('STRIPE_SECRET_KEY_BOUTIQUE', '')  # key with empty default value
