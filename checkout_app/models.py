@@ -1,11 +1,11 @@
 """ import models """
-import uuid #used to generate the order no.
+import uuid  #used to generate the order no.
 
 from django.db import models
 from django.db.models import Sum
 from django.conf import settings
 
-from products_app.model import Product
+from products_app.models import Product
 
 # when a user checks out:
 # First use the information they put into the payment form to create an order instance.
@@ -15,6 +15,7 @@ from products_app.model import Product
 
 class Order(models.Model):
     """ Define the variables that allow us to create and track orders """
+    
     order_number = models.CharField(max_length=32, null=False, editable=False) # permanent
     full_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.CharField(max_length=254, null=False, blank=False)
@@ -50,7 +51,7 @@ class Order(models.Model):
             self.delivery_cost = 0
         self.grand_total = self.order_total + self.delivery_cost
         self.save()
-    
+
     def save(self, *args, **kwargs):
         """
         To override the default save method to create the 
@@ -60,7 +61,7 @@ class Order(models.Model):
             self.order_number = self._generate_order_number()
         # execute the original save method
         super().save(*args, **kwargs)
-    
+
     def __str__(self):
         return self.order_number
 
@@ -80,6 +81,6 @@ class OrderLineItem(models.Model):
         """
         self.lineitem_total = self.product.price * self.quantity
         super().save(*args, **kwargs)
-    
+
     def __str__(self):
         return f'SKU {self.product.sku} on order {self.order.order_number}'
