@@ -13,7 +13,7 @@ def checkout(request):
         return redirect(reverse('products'))  # prevent people from manually accessing the URL by typing '/checkout'
     
     order_form = OrderForm()
-    template = 'checkout_app/checkout.html'
+    template = 'checkout/checkout.html'
     context = {
         'order_form': order_form,
     }
