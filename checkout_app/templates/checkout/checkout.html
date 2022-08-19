@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <!-- <link rel="stylesheet" href="{% static 'checkout_app/css/checkout.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/checkout.css' %}"> -->
+{% endblock %}
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- <h1 class="display-4 text-success">Shopping Bag Page works!</h1> -->
+<div class="overlay"></div>
+<div class="container">
+
+    <!-- shopping bag heading -->
+    <div class="row">
+        <div class="col">
+            <hr>
+            <h2 class="logo-font mb-4">Shopping Bag</h2>
+            <hr>
+        </div>
+    </div>
+
+    <!-- Order Form content -->
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <!-- To render the table only if there is something in the shopping bag -->
+            <p class="text-muted">Please fill out the form below to complete your order</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
