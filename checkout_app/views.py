@@ -40,6 +40,7 @@ def checkout(request):
         order_form = OrderForm(form_data)
         if order_form.is_valid():
             order = order_form.save()
+            # order_form.save()
 
             # need to iterate through the bag items to create each line item
             for item_id, item_data in bag.items():
