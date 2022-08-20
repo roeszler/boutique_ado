@@ -1,5 +1,5 @@
 """ Import Modules """
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.conf import settings
 
@@ -7,7 +7,7 @@ from bag_app.contexts import bag_contents
 from products_app.models import Product
 
 from .forms import OrderForm
-from .models import OrderLineItem
+from .models import Order, OrderLineItem
 
 
 import stripe
@@ -125,17 +125,22 @@ def checkout_success(request, order_number):
     indicating to the user that their payment is complete.
     """
     save_info = request.session.get('save_info')
+
+    # get order no and send it back to template view
     order = get_object_or_404(Order, order_number=order_number)
+
+    # email successful order
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
 
+    # clear users shopping bag
     if 'bag' in request.session:
         del request.session['bag']
 
+    # set and render the template and context
     template = 'checkout/checkout_success.html'
     context = {
         'order': order,
     }
-
     return render(request, template, context)
