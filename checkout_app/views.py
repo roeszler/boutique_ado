@@ -14,6 +14,11 @@ import stripe
 
 # Create your views here.
 def checkout(request):
+    """
+    To define the actions of the checkout processes:
+    Success, form errors, calculate totals, create line items 
+    and pass information to the user on errors.
+    """
     stripe_public_key = settings.STRIPE_PUBLIC_KEY_BOUTIQUE
     stripe_secret_key = settings.STRIPE_SECRET_KEY_BOUTIQUE
 
@@ -41,7 +46,7 @@ def checkout(request):
                 try:
                     product = Product.objects.get(id=item_id)
 
-                    # check if intieger for product w/ sizes or not
+                    # check if integer for product w/ sizes or not
                     if isinstance(item_data, int):
                         order_line_item = OrderLineItem(
                             order=order,
@@ -112,3 +117,10 @@ def checkout(request):
     }
 
     return render(request, template, context)
+
+
+def checkout_success(request, order_number):
+    """
+    To take the order number and render success page
+    indicating to the user that their payment is complete.
+    """
