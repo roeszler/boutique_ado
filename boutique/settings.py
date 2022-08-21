@@ -213,6 +213,8 @@ STRIPE_CURRENCY = 'usd'
 
 # STRIPE_PUBLIC_KEY_BOUTIQUE = os.getenv('STRIPE_PUBLIC_KEY_BOUTIQUE', '')  # key with empty default value
 # STRIPE_SECRET_KEY_BOUTIQUE = os.getenv('STRIPE_SECRET_KEY_BOUTIQUE', '')  # key with empty default value
+# STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')  # key with empty default value
 
 STRIPE_PUBLIC_KEY_BOUTIQUE = os.environ.get('STRIPE_PUBLIC_KEY_BOUTIQUE', '')  # key with empty default value
 STRIPE_SECRET_KEY_BOUTIQUE = os.environ.get('STRIPE_SECRET_KEY_BOUTIQUE', '')  # key with empty default value
+STRIPE_WH_SECRET = os.environ.get('STRIPE_WH_SECRET', '')  # key with empty default value
