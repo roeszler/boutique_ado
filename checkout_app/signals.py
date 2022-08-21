@@ -16,13 +16,15 @@ def update_on_save(sender, instance, created, **kwargs):
     Special function to handle signals from the post_save event.
     Update order total on lineitem update / create.
     """
+    print('save signal received!')
     instance.order.update_total()
 
 
 @receiver(post_delete, sender=OrderLineItem)
-def update_on_save(sender, instance, deleted, **kwargs):
+def update_on_delete(sender, instance, **kwargs):
     """
     Special function to handle signals from the post_save event.
     Update order total on lineitem delete.
     """
+    print('delete signal received!')
     instance.order.update_total()
