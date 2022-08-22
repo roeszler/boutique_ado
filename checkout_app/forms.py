@@ -31,7 +31,7 @@ class OrderForm(forms.ModelForm):
             'full_name': 'Full Name',
             'email': 'Email Address',
             'phone_number': 'Phone Number',
-            'country': 'Country',
+            # 'country': 'Country',
             'postcode': 'Postal Code',
             'town_or_city': 'Town or City',
             'street_address1': 'Street Address 1',
@@ -46,10 +46,12 @@ class OrderForm(forms.ModelForm):
         # To iterate through the forms fields adding a star to the placeholder
         # if it's a required field on the model:
         for field in self.fields:
-            if self.fields[field].required:
-                placeholder = f'{placeholders[field]} *' # '*' if it's a required field on the model
-            else:
-                placeholder = placeholders[field]
-            self.fields[field].widget.attrs['placeholder'] = placeholder # Setting all the placeholder attributes to their values in the above dictionary
+            # only want do this if the field is not equal to country:
+            if field != 'country':
+                if self.fields[field].required:
+                    placeholder = f'{placeholders[field]} *' # '*' if it's a required field on the model
+                else:
+                    placeholder = placeholders[field]
+                self.fields[field].widget.attrs['placeholder'] = placeholder # Setting all the placeholder attributes to their values in the above dictionary
             self.fields[field].widget.attrs['class'] = 'stripe-style-input'  # adding a css class
             self.fields[field].label = False  # removing form fields labels as now placeholders are set
