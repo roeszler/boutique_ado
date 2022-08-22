@@ -60,15 +60,14 @@ card.addEventListener('change', function (event) {
 // Handle form submit edited from stripe documentation accept payments
 let form = document.getElementById('payment-form');
 
-
-// AddEventListener Custom funciton:
+// The following AddEventListener Custom .form handles data from backend to frontend.
 // When the user clicks the submit button the event listener prevents the form from submitting
 // and instead disables the card element and triggers the loading overlay.
-// We then create a few variables to capture the form data we can't put in
-// the payment intent, and instead post it to the 'cache_checkout_data' view.
+// We then create a few saveInfo variables to capture the form data we can't put in
+// the payment intent, and instead .post it to the 'cache_checkout_data' view.
 // The view updates the payment intent and returns a 200 response, at which point we
-// call the confirm card payment method from stripe and if everything is ok
-// to submit the form.
+// call the confirm card payment method from stripe and if everything is ok,
+// it submits the form.
 
 // If there's an error in the form then the loading overlay will
 // be hidden the card element re-enabled and the error displayed for the user.
@@ -161,8 +160,8 @@ form.addEventListener('submit', function(ev) {
             }
         });
     }).fail(function () {
-        // If our view sends a 400 bad request response
-        // just reload the page, the error will be in django messages
+        // If our view sends a 400 bad request response, this will
+        // reload the page, the error will be in django messages
         // to show the user the error message from the view.
         location.reload();
     })

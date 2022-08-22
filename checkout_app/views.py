@@ -51,7 +51,7 @@ def cache_checkout_data(request):
 def checkout(request):
     """
     To define the actions of the checkout processes:
-    Success, form errors, calculate totals, create line items 
+    Success, form errors, calculate totals, create line items
     and pass information to the user on errors.
     """
     stripe_public_key = settings.STRIPE_PUBLIC_KEY_BOUTIQUE

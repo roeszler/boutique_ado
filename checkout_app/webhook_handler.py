@@ -15,7 +15,7 @@ class StripeWH_Handler:
         self.request = request
     
     def handle_event(self, event):
-        """ 
+        """
         Handle that listens for a generic/unknown/unexpected webhook event
         """
         return HttpResponse(
@@ -27,6 +27,9 @@ class StripeWH_Handler:
         """
         Handle listening for the payment_intent.succeeded webhook from Stripe
         """
+        intent = event.data.object
+        print(intent)
+        print('handle_payment_intent_succeeded')
         return HttpResponse(
             content=f'Webhook received: {event["type"]}',
             status=200
