@@ -7,6 +7,7 @@ from django.conf import settings
 from django_countries.fields import CountryField
 
 from products_app.models import Product
+from profiles_app.models import UserProfile
 
 # when a user checks out:
 # First use the information they put into the payment form to create an order instance.
@@ -18,6 +19,16 @@ class Order(models.Model):
     """ Define the variables that allow us to create and track orders """
     
     order_number = models.CharField(max_length=32, null=False, editable=False) # permanent
+
+    # To keep an order history in the admin even if the user is deleted , and
+    # able to be null or blank so that users who don't have an account can
+    # still make purchases and a related name so we can access the users orders
+    # by something like 'user.userprofile.orders':
+    user_profile = models.ForeignKey(
+        UserProfile, on_delete=models.SET_NULL, 
+        null=True, blank=True, related_name='orders'
+        )
+    
     full_name = models.CharField(max_length=50, null=False, blank=False)
     email = models.CharField(max_length=254, null=False, blank=False)
     phone_number = models.CharField(max_length=20, null=False, blank=False)
