@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <!-- To render the shopping bag items if there is a grand total -->
+        <!-- To render the shopping bag items if there is a grand total and not on the profile page -->
         {% if grand_total and not on_profile_page %}
             <p class="logo-font bg-white text-black py-1">Your Bag ({{ product_count }})</p>
             <div class="bag-notification-wrapper">

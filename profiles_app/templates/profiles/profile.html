@@ -29,6 +29,8 @@
             <!-- Profile Section -->
             <div class="col-12 col-lg-6">
                 <p class="text-muted">Default Delivery Information</p>
+
+                <!-- POST method handled by views.py profile() -->
                 <form class="mt-3" action="{% url 'profile' %}" method="POST" id="profile-update-form">
                     {% csrf_token %}
                     {{ form|crispy }}
