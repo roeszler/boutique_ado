@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from django.django_countries import CountryField
+from django_countries.fields import CountryField
 
 
 class UserProfile(models.Model):
