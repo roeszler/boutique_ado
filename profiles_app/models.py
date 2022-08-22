@@ -16,13 +16,14 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # the delivery information fields we want the user to provide defaults for:
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     default_phone_number = models.CharField(max_length=20, null=True, blank=True)
-    default_country = CountryField(blank_label='Country *', null=True, blank=True)
-    default_postcode = models.CharField(max_length=20, null=True, blank=True)
-    default_town_or_city = models.CharField(max_length=40, null=True, blank=True)
     default_street_address1 = models.CharField(max_length=80, null=True, blank=True)
     default_street_address2 = models.CharField(max_length=80, null=True, blank=True)
+    default_town_or_city = models.CharField(max_length=40, null=True, blank=True)
     default_county = models.CharField(max_length=80, null=True, blank=True)
+    default_postcode = models.CharField(max_length=20, null=True, blank=True)
+    default_country = CountryField(blank_label='Country', null=True, blank=True)
 
     # string method to return the user name:
     def __str__(self):

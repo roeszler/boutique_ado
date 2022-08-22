@@ -1,0 +1,19 @@
+/* ------------ Form fields on profile_app htmls */
+#profile-update-form .form-control {
+    color: #000;
+}
+
+#profile-update-form input::placeholder {
+    color: #aab7c4;
+}
+
+/* To make the country field itself as well as all its options except for the first one black by default. */
+#id_default_country,
+#id_default_country option:not(:first-child) {
+    color: #000;
+}
+
+/* Make the first option element the colour of the placeholder */
+#id_default_country option:first-child {
+    color: #aab7c4;
+}
