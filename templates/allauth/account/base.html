@@ -1,1 +1,23 @@
 {% extends "base.html" %}
+
+<!-- 
+    This block is called content, which means the login templates content block 
+    just replaces it so any changes won't have an effect.
+    However, if we were to rename the login templates content block
+    to something else (like inner_content), we could stick it inside this div instead: 
+-->
+{% block content %}
+    <div class="container header-container">
+        <div class="overlay"></div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <div class="allauth-form-inner-content">
+                    
+                    <!-- allowing login.html to replace base.html in the account folder -->
+                    {% block inner_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
