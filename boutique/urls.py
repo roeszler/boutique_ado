@@ -25,4 +25,5 @@ urlpatterns = [
     path('products/', include('products_app.urls')),  # look in the app dir products_app/urls.py
     path('bag/', include('bag_app.urls')),  # look in the app dir products_app/urls.py
     path('checkout/', include('checkout_app.urls')),  # look in the app dir checkout_app/urls.py
+    path('profile/', include('profiles_app.urls')),  # look in the app dir profiles_app/urls.py
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
