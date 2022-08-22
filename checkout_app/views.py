@@ -42,10 +42,11 @@ def cache_checkout_data(request):
         return HttpResponse(status=200)
 
     # to capture exceptions
-    except Exception as error:
+    except Exception as e:
+        # print("ERROR: ", error)
         messages.error(request, 'Sorry, your payment cannot be \
             processed right now. Please try again later.')
-        return HttpResponse(content=error, status=400)
+        return HttpResponse(content=e, status=400)
 
 
 def checkout(request):
