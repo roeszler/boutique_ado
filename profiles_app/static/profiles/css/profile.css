@@ -1,4 +1,9 @@
 /* ------------ Form fields on profile_app htmls */
+.order-history {
+    max-height: 416px; /* height of the form and adjacent column thus scrollbar */
+    overflow: auto;
+}
+
 #profile-update-form .form-control {
     color: #000;
 }
