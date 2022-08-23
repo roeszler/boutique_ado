@@ -19,9 +19,13 @@ def profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile updated successfully')
-
-    # To populate profile with the current users profile info:
-    form = UserProfileForm(instance=profile)
+        
+        # so it doesn't wipe out the form errors:
+        else:
+            messages.error(request, 'Update failed. Please ensure the form is valid.')
+    else:
+        # To populate profile with the current users profile info:
+        form = UserProfileForm(instance=profile)
 
     # To render an order history
     orders = profile.orders.all()
