@@ -22,7 +22,8 @@ def profile(request):
         
         # so it doesn't wipe out the form errors:
         else:
-            messages.error(request, 'Update failed. Please ensure the form is valid.')
+            messages.error(request, 'Update failed. Please see error under\
+                field details and ensure the form is valid.')
     else:
         # To populate profile with the current users profile info:
         form = UserProfileForm(instance=profile)
