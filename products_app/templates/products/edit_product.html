@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="overlay"></div>
+    <!-- Header element -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <hr>
+                <h2 class="logo-font mb-4">Product Management</h2>
+                <h5 class="text-muted">Edit a Product</h5>
+                <hr>
+            </div>
+        </div>
+
+        <!-- 50% width form to edit products in the DB -->
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <!--
+                    Encoding type (enctype) attribute needed as potentially be submitting an image file, and without it 
+                    the image won't be uploaded properly. 'edit_product' is in products_app > views.py
+                -->
+                <form method="POST" action="{% url 'edit_product' product.id %}" class="form mb-2" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form | crispy }}
+                    
+                    <!-- Submit and Cancel buttons -->
+                    <div class="text-right">
+                        <a class="btn btn-outline-black rounded-0" href="{% url 'products' %}">Cancel</a>
+                        <button class="btn btn-black rounded-0" type="submit">Update Product</button>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+{% endblock %}

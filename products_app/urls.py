@@ -10,5 +10,6 @@ urlpatterns = [
     # In this case unless we specify that product_id is an integer django 
     # doesn't know the difference between a product number and a string: 
     path('<int:product_id>/', views.product_detail, name='product_detail'), # 'int:' creates it as an integer
+    path('edit/<int:product_id>/', views.edit_product, name='edit_product'), # 'int:' creates it as an integer
     path('add/', views.add_product, name='add_product'),
 ]
