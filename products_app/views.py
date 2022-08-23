@@ -109,15 +109,17 @@ def edit_product(request, product_id):
     """ Edit a product in the store """
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
-        # prefill form
+        # prefill form with instance of product obtained above
         form = ProductForm(request.POST, request.FILES, instance=product)
-        # instantiating prooduct form
         if form.is_valid():
             form.save()
             messages.success(request, 'Successfully updated product!')
+
+            # redirect back to the product detail page using the product id:
             return redirect(reverse('product_detail', args=[product.id]))
         else:
-            messages.error(request, 'Failed to update product. Please ensure the form is valid.')
+            messages.error(request, 'Failed to update product. Please ensure\
+                your entries in the form are valid.')
     else:
         # instantiating product form and notifying user of editing capacity:
         form = ProductForm(instance=product)
