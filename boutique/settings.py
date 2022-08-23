@@ -129,7 +129,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # is what tells allauth that we want to allow authentication using either usernames or emails:
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 
-# These three make an email to be required to register for the site, 
+# These three make an email to be required to register for the site,
 # verifying your email is mandatory and enter it twice:
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
@@ -154,7 +154,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -222,3 +221,5 @@ STRIPE_CURRENCY = 'usd'
 STRIPE_PUBLIC_KEY_BOUTIQUE = os.environ.get('STRIPE_PUBLIC_KEY_BOUTIQUE', '')  # key with empty default value
 STRIPE_SECRET_KEY_BOUTIQUE = os.environ.get('STRIPE_SECRET_KEY_BOUTIQUE', '')  # key with empty default value
 STRIPE_WH_SECRET = os.environ.get('STRIPE_WH_SECRET', '')  # key with empty default value
+
+DEFAULT_FROM_EMAIL = 'boutiquado@example.com'
