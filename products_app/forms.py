@@ -31,6 +31,6 @@ class ProductForm(forms.ModelForm):
         self.fields['category'].choices = friendly_names
         
         # iterate through the rest of these fields and set
-        # classes on them to match the rest of our store theme.
+        # classes on them to match the rest of our store theme:
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'border-black rounded-0'
