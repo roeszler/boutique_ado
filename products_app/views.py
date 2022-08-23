@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q  # object to generate a search query
 from django.db.models.functions import Lower
 
@@ -15,10 +16,10 @@ def all_products(request):
     sort = None  # ensures no error when loading without a sort filter
     direction = None  # ensures no error when loading without a direction filter
 
-# To return results where the query was matched in either the product name OR
-# the description. The OR logic is derived through 'Q'.
-# If q is in request.get, set q to equal a variable called 'query'
-# Django messages framework & redirect, reversely back to the products url
+    # To return results where the query was matched in either the product name OR
+    # the description. The OR logic is derived through 'Q'.
+    # If q is in request.get, set q to equal a variable called 'query'
+    # Django messages framework & redirect, reversely back to the products url
     if request.GET:
         if 'q' in request.GET:
             query = request.GET['q']
@@ -80,6 +81,11 @@ def product_detail(request, product_id):
     return render(request, 'products/product-detail.html', context)
 
 
+# @decorators are special functions that wrap around another function
+# and return a new one with some additional functionality. Used on the 
+# line immediately above the view we wish to decorate:
+
+@login_required
 def add_product(request):
     """ Adds a product to the store """
     if request.method == 'POST':
@@ -108,7 +114,7 @@ def add_product(request):
 
     return render(request, template, context)
 
-
+@login_required
 def edit_product(request, product_id):
     """ Edit a product in the store """
     product = get_object_or_404(Product, pk=product_id)
@@ -138,7 +144,7 @@ def edit_product(request, product_id):
 
     return render(request, template, context)
 
-
+@login_required
 def delete_product(request, product_id):
     """ Delete a product from the store """
     product = get_object_or_404(Product, pk=product_id)
