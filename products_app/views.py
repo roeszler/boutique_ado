@@ -81,7 +81,7 @@ def product_detail(request, product_id):
 
 
 def add_product(request):
-    """ Add a product to the store """
+    """ Adds a product to the store """
     form = ProductForm()
     template = 'products/add_product.html'
     context = {

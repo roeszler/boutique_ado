@@ -11,6 +11,7 @@
 
 {% block content %}
     <div class="overlay"></div>
+    <!-- Header element -->
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-6">
@@ -21,6 +22,7 @@
             </div>
         </div>
 
+        <!-- 50% width form to add products to the DB -->
         <div class="row">
             <div class="col-12 col-md-6">
                 <form method="POST" action="{% url 'add_product' %}" class="form mb-2" enctype="multipart/form-data">
