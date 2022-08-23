@@ -25,9 +25,15 @@
         <!-- 50% width form to add products to the DB -->
         <div class="row">
             <div class="col-12 col-md-6">
+                <!--
+                    Encoding type (enctype) attribute needed as potentially be submitting an image file, and without it 
+                    the image won't be uploaded properly:
+                -->
                 <form method="POST" action="{% url 'add_product' %}" class="form mb-2" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form | crispy }}
+                    
+                    <!-- Submit and Cancel buttons -->
                     <div class="text-right">
                         <a class="btn btn-outline-black rounded-0" href="{% url 'products' %}">Cancel</a>
                         <button class="btn btn-black rounded-0" type="submit">Add Product</button>
