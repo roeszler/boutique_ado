@@ -1,6 +1,7 @@
 """ Import Models """
 from django import forms
 
+from .widgets import CustomClearableFileInput
 from .models import Product, Category
 
 
@@ -14,6 +15,9 @@ class ProductForm(forms.ModelForm):
         """ Defines the model and fields we wish to include """
         model = Product
         fields = '__all__'
+
+    # Connects to widget in widgets.py to style the admin order list 
+    image = forms.ImageField(label='Image', required=False, widget=CustomClearableFileInput) 
 
     def __init__(self, *args, **kwargs):
         """
