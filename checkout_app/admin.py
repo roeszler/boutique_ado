@@ -26,7 +26,7 @@ class OrderAdmin(admin.ModelAdmin):
     # To specify the order of the fields in the admin interface 
     # which would otherwise be adjusted by django
     fields = (
-        'order_number', 'date', 'full_name',
+        'order_number', 'user_profile', 'date', 'full_name',
         'email', 'phone_number', 'country',
         'postcode', 'town_or_city', 'street_address1',
         'street_address2', 'county', 'delivery_cost',

@@ -5,6 +5,8 @@ from django.contrib import messages
 from .models import UserProfile
 from .forms import UserProfileForm
 
+from checkout_app.models import Order
+
 
 def profile(request):
     """ Display the user's profile. """
