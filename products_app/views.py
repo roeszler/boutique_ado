@@ -88,11 +88,15 @@ def product_detail(request, product_id):
 @login_required
 def add_product(request):
     """ Adds a product to the store """
+
+    # To authorize that only superusers to have access to the add, edit, and delete views:
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
+    # If the request method is post, instantiates a new instance of 
+    # the ProductForm and request the image of the product if submitted.
     if request.method == 'POST':
-        """
-        If the request method is post, instantiates a new instance of 
-        the ProductForm and request the image of the product if submitted.
-        """
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save()
@@ -117,6 +121,12 @@ def add_product(request):
 @login_required
 def edit_product(request, product_id):
     """ Edit a product in the store """
+
+    # To authorize that only superusers to have access to the add, edit, and delete views:
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
         # prefill form with instance of product obtained above
@@ -147,6 +157,12 @@ def edit_product(request, product_id):
 @login_required
 def delete_product(request, product_id):
     """ Delete a product from the store """
+
+    # To authorize that only superusers to have access to the add, edit, and delete views:
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
     product = get_object_or_404(Product, pk=product_id)
     product.delete()
     messages.success(request, 'Product deleted!')
