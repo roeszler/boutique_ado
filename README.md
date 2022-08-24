@@ -3,6 +3,9 @@ A [CI](https://codeinstitute.net/) walkthrough project 2022
 
 * Deployment: https://boutique-ado-sr.herokuapp.com/
 * Repository: https://github.com/roeszler/boutique_ado
+
+Still to come:
+* 
 ## 3 step planning process:
 
 Type of e-commerce application for Boutique Ado Walkthrough?
