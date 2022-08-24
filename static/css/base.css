@@ -308,4 +308,47 @@ Pad the top with 116px when navbar is collapsed on mobile
     body {
         height: calc(100vh - 116px);
     }
+
+    /* educe the size of the main page call-out to 2rem */
+    .display-4.logo-font.text-black {
+        font-size: 2rem;
+    }
+
+    /* Reduce the padding on the nav links */
+    .nav-link {
+        padding: 0.15rem;
+    }
+
+    /* Reduce the font sizes on the nav font awesome icons */
+    .nav-link i.fa-lg {
+        font-size: 1rem;
+    }
+
+    /* Reduce the padding and font on the nav toggler */
+    .navbar-toggler {
+        padding: .6rem .6rem;
+        font-size: 1rem;
+    }
+
+    /* Reduce font size so it won't wrap even on the smallest modern screens */
+    #delivery-banner h4 {
+        font-size: .9rem;
+    }
+
+    /* the buttons on the product detail page and the shopping bag page */
+    .btn.btn-outline-black.rounded-0,
+    .btn.btn-black.rounded-0 {
+        padding: .375rem .375rem;
+    }
+
+    .btn.btn-outline-black.rounded-0.btn-lg,
+    .btn.btn-black.rounded-0.btn-lg {
+        padding: .375rem .375rem;
+        font-size: .75rem;
+    }
+
+    /* increment and decrement quantity form buttons to ignore above changes */
+    .increment-qty, .decrement-qty {
+        padding: .25rem .5rem !important;
+    }
 }
