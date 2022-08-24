@@ -1,7 +1,7 @@
 # Boutique ADO online Clothing and Accessories Store
 A [CI](https://codeinstitute.net/) walkthrough project 2022
 
-* Deployment: 
+* Deployment: https://boutique-ado-sr.herokuapp.com/
 * Repository: https://github.com/roeszler/boutique_ado
 ## 3 step planning process:
 
