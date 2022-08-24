@@ -18,6 +18,8 @@ from django.urls import path, include
 from django.conf import settings  # to link up our static and media files
 from django.conf.urls.static import static  # to link up our static and media files
 
+from .views import handler404
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
@@ -27,3 +29,5 @@ urlpatterns = [
     path('checkout/', include('checkout_app.urls')),  # look in the app dir checkout_app/urls.py
     path('profile/', include('profiles_app.urls')),  # look in the app dir profiles_app/urls.py
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'boutique.views.handler404'
