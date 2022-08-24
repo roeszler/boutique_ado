@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bag_tools %}
+
+
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- <h1 class="display-4 text-success">Shopping Bag Page works!</h1> -->
+<div class="overlay"></div>
+<div class="container mb-2">
+
+    <!-- shopping bag heading -->
+    <div class="row">
+        <div class="col">
+            <hr>
+            <h2 class="logo-font mb-4">Shopping Bag</h2>
+            <hr>
+        </div>
+    </div>
+
+    <!-- Shopping bag content -->
+    <div class="row">
+        <div class="col">
+            <!-- To render the table only if there is something in the shopping bag -->
+            {% if bag_items %}
+            <div class="table-responsive rounded">
+                <!-- {{ bag_items }} -->
+                <!-- Table to contain the shopping bag view at ../bag/ -->
+                <table class="table table-sm table-borderless">
+                    <thead class="text-black">
+                        <tr>
+                            <th scope="col">Product Info</th>
+                            <th scope="col"></th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Subtotal</th>
+                        </tr>
+                    </thead>
+
+                    <!-- To iterate through each item in the shopping bag and create a row for each -->
+                    {% for item in bag_items %}
+                    <tr>
+                        <td class="p-3 w-25">
+                            {% if item.product.image %}
+                                <img class="img-fluid rounded" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                            {% else %}
+                                <!-- to render the 'noimage' picture if none provided in the add_product views  -->
+                                <img class="img-fluid rounded" src="{{ MEDIA_URL }}noimage.png" alt="{{ item.product.name }}">
+                            {% endif %}
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0"><strong>{{ item.product.name }}</strong></p>
+                            <p class="my-0"><strong>Size: {% if item.product.has_sizes %}{{ item.size|upper }}{% else %}One size only{% endif %}</strong></p>
+                            <p class="my-0 small text-muted">SKU: {{ item.product.sku|upper }}</p>
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0">${{ item.product.price }}</p>
+                        </td>
+                        <td class="py-3 w-25">
+                            <!-- <p class="my-0">{{ item.quantity }}</p> -->
+                            <!-- quantity selector box allowing update the quantity from shopping bag -->
+                            <form class="form update-form" method="POST" action="{% url 'adjust_bag' item.item_id %}">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <div class="input-group input-group-{{ item.item_id }}">
+    
+                                        <!-- Minus 'prepend' button w/ attribute data-item_id -->
+                                        <div class="input-group-prepend">
+                                            <button
+                                                class="decrement-qty btn btn-sm btn-black rounded-0 decrement-qty_{{ item.item_id }}"
+                                                data-item_id="{{ item.item_id }}">
+                                                <span>
+                                                    <i class="fas fa-minus fa-sm"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+    
+                                        <!-- Detail view quantity to order field -->
+                                        <input class="form-control forn-control-sm qty_input id_qty_{{ item.item_id }}" type="number"
+                                            name="quantity" value="{{ item.quantity }}" min="1" max="99" data-item_id="{{ item.item_id }}">
+                                        
+                                        <!-- Plus 'append' button w/ attribute data-item_id -->
+                                        <div class="input-group-append">
+                                            <button
+                                                class="increment-qty btn btn-sm btn-black rounded-0 increment-qty_{{ item.item_id }}"
+                                                data-item_id="{{ item.item_id }}">
+                                                <span>
+                                                    <i class="fas fa-plus fa-sm"></i>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        {% if item.product.has_sizes %}
+                                        <!-- to submit the size of the item the user wants to update or remove in a hidden input field. -->
+                                        <input type="hidden" name="product_size" value="{{ item.size }}">
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </form>
+                            <!-- 
+                                Simple <a> controls to update quantity and submit the 
+                                form w/ action controlled by Js listening for a click in postloadjs block
+                            -->
+                            <a class="update-link text-info float-right"><small>Update Qty</small></a>
+
+                            <!-- 
+                                Simple <a> controls to remove quantity with w/ action controlled by Js listening for a click in postloadjs block.
+                                Id to to discern which specific item the customer wants to remove if there are multiple sizes of this item in the bag: 
+                            -->
+                            <a class="remove-item text-danger" id="remove_{{ item.item_id }}" data-product_size="{{ item.size }}"><small>Delete Item</small></a>
+                        </td>
+                        <td class="py-3">
+                            <p class="my-0">${{ item.product.price | calc_subtotal:item.quantity }}</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    <!-- To show user a summary and indicate if they are under the free delivery threshold -->
+                    <tr>
+                        <td colspan="5" class="pt-5 text-right">
+                            <!-- User Summary -->
+                            <h6><strong>Bag Total: ${{ total|floatformat:2 }}</strong></h6>
+                            <h6>Delivery: ${{ delivery|floatformat:2 }}</h6>
+                            <h4 class="mt-4"><strong>Grand Total: ${{ grand_total|floatformat:2 }}</strong></h4>
+
+                            <!-- Conditionally indicates if they are still under the free delivery threshold -->
+                            {% if free_delivery_delta > 0 %}
+                                <p class="mb-1 text-danger">
+                                    You could get free delivery by spending just <strong>${{ free_delivery_delta }}</strong> more!
+                                </p>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <!-- Final shopping decider section -->
+                    <tr>
+                        <td colspan="5" class="text-right">
+
+                            <!-- Keep shopping button -->
+                            <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+                                <span class="icon">
+                                    <i class="fas fa-chevron-left"></i>
+                                </span>
+                                <span class="text-uppercase">Keep Shopping</span>
+                            </a>
+
+                            <!-- Secure checkout button link to secure checkout page -->
+                            <a href="{% url 'checkout' %}" class="btn btn-black rounded-0 btn-lg">
+                                <span class="text-uppercase">Secure Checkout</span>
+                                <span class="icon">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            {% else %}
+
+            <!-- give users link back to products page -->
+            <p class="lead mb-5">Your bag is empty.</p>
+            <a href="{% url 'products' %}" class="btn btn-outline-black rounded-0 btn-lg">
+                <span class="icon">
+                    <i class="fas fa-chevron-left"></i>
+                </span>
+                <span class="text-uppercase">Keep Shopping</span>
+            </a>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- To include the postload Js -->
+{% block postloadjs %}
+
+    <!-- Include the parent block -->
+    {{ block.super }}
+    <!-- Include the quantity_input_script.html code -->
+    {% include 'products/includes/quantity_input_script.html' %}
+
+    <script type="text/javascript">
+        // To update quantity on click
+        // Using the previous method to find the most recently seen update form in the Dom, 
+        // store the form in a variable
+        // call the forms submit method
+        $('.update-link').click(function(e) {
+            let form = $(this).prev('.update-form');
+            form.submit();
+        })
+
+        // Remove item and reload on click
+        // Post some data to a url and once the response comes back from the server
+        // reload the page to reflect the updated bag
+        // template variable 'curly{ curly{ curly} curly}' - renders the actual element
+        // template tag 'curly{ percent% percent% curly}' - renders a hidden input field in a form
+        $('.remove-item').click(function(e) {
+            let csrfToken = '{{ csrf_token }}';  // store csrf token as a string 
+            let itemId = $(this).attr('id').split('remove_')[1];  // removing item Id by splitting the update link being clicked on at the '_' and taking the second half of it [1].
+            let size = $(this).data('product_size');  // get the size using the .data method to pull it from the 'product_size' attribute.
+            let url = `/bag/remove/${itemId}/`;  // template literal of the remove URL
+
+            // The CSRFmiddleware token key (containing the csrf_token and size) will match the field Django is expecting 
+            // to see in request.post when we post it to the server:
+            let data = {'csrfmiddlewaretoken': csrfToken, 'product_size': size};  // object used to send data to the server. 
+
+            $.post(url, data) // to post data and URL to the server.
+            .done(function() {  // function to re-load the page
+                location.reload();
+            });
+        })
+
+    </script>
+
+{% endblock %}

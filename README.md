@@ -5,7 +5,23 @@ A [CI](https://codeinstitute.net/) walkthrough project 2022
 * Repository: https://github.com/roeszler/boutique_ado
 
 Still to come:
-* 
+* Additional testing on stripe.
+* Setting up real confirmation emails.
+* Switching our stripe settings to use the live keys 
+* To write a plethora of tests for our application. In particular:
+	- The Checkout app.
+	- The Shopping bag app
+* Some security adjustments... 
+* Some minor changes between our development and production environments to make interactions easier.
+
+* Refactor:
+The minus quantity button in the bag is meant to be disabled when the quantity hits 1. Which works on small screens after this refactor. However, this does not work on larger screens.
+
+The reason for this is because during this code refactoring, the instructor uses the quantity-form twice, and hides one or the other depending on the screen size. However, as the quantity-form uses an ID to identify itself, only the first element within the HTML with that ID is picked up by the corresponding code. Even though you can only see one form at a time in the browser, they both exist within the HTML.
+
+You don't need to fix this error while working on this walkthrough project. However please be aware of this if you want to include similar functionality in your own project.
+
+To fix this issue you would need to change the ID on the quantity-form to a class, and refactor the JavaScript to look for elements with the same class name and perform the appropriate actions.
 ## 3 step planning process:
 
 Type of e-commerce application for Boutique Ado Walkthrough?
