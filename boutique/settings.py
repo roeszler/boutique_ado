@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY_DJANGO', '')  # key with empty default v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['boutique-ado-sr.herokuapp.com', 'localhost']
 
 
 # Application definition
