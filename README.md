@@ -5,6 +5,7 @@ A [CI](https://codeinstitute.net/) walkthrough project 2022
 * Repository: https://github.com/roeszler/boutique_ado
 
 Still to come:
+* Rectify nomenclature of .html files to be hyphenated ie product-detail.html not product_detail.html as used by instructor
 * Additional testing on stripe.
 * Setting up real confirmation emails.
 * Switching our stripe settings to use the live keys 
