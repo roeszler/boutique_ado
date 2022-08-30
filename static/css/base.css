@@ -309,7 +309,7 @@ Pad the top with 116px when navbar is collapsed on mobile
         height: calc(100vh - 116px);
     }
 
-    /* educe the size of the main page call-out to 2rem */
+    /* Reduce the size of the main page call-out to 2rem */
     .display-4.logo-font.text-black {
         font-size: 2rem;
     }
