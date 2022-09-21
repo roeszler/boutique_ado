@@ -77,7 +77,7 @@ def checkout(request):
         }
         order_form = OrderForm(form_data)
         if order_form.is_valid():
-            # prevent multiple save events py preventing the first from happening
+            # prevent multiple save events by preventing the first from happening
             order = order_form.save(commit=False)
 
             # split it to get the payment intent id like we did in the cash check out data view
